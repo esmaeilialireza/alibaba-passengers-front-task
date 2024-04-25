@@ -4,9 +4,11 @@ import React, { FC, HTMLProps } from 'react';
 import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import PlusSvg from '@/components/svg/plus-svg';
 import { FormData } from '@/types';
 
-import FormItem from './formItem';
+import FormItem from './form-item';
+import FormHeader from './form-header';
 import formSchema from './zod-schema';
 
 interface FormProps extends HTMLProps<HTMLFormElement> {}
@@ -39,6 +41,8 @@ const Form: FC<FormProps> = ({ className, ...props }) => {
 
   return (
     <FormProvider {...form}>
+      <FormHeader />
+
       <form onSubmit={onSubmit} className={className} {...props}>
         {fields.map((field, index) => (
           <FormItem
@@ -63,20 +67,7 @@ const Form: FC<FormProps> = ({ className, ...props }) => {
                 nationalCode: '',
               })
             }>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1.5em"
-              height="1.5em"
-              viewBox="0 0 24 24">
-              <path
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-                d="M18 12h-6m0 0H6m6 0V6m0 6v6"
-              />
-            </svg>
+            <PlusSvg />
             <p>اضافه کردن مسافر جدید</p>
           </button>
           <button

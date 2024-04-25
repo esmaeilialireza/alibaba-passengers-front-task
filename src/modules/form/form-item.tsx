@@ -34,6 +34,7 @@ const FormItem: FC<FormItemProps> = ({
             setValue(`fields.${index}.firstName`, e.target.value)
           }
           placeholder="نام فارسی"
+          className="h-12"
         />
         {formState.errors.fields?.[index] && (
           <span className="text-red-400 mt-2">
@@ -41,6 +42,7 @@ const FormItem: FC<FormItemProps> = ({
           </span>
         )}
       </div>
+
       <div className="flex flex-col">
         <Input
           value={watch(`fields.${index}.lastName`)}
@@ -48,6 +50,7 @@ const FormItem: FC<FormItemProps> = ({
             setValue(`fields.${index}.lastName`, e.target.value)
           }
           placeholder="نام خانوادگی فارسی"
+          className="h-12"
         />
         {formState.errors.fields?.[index] && (
           <span className="text-red-400 mt-2">
@@ -55,9 +58,11 @@ const FormItem: FC<FormItemProps> = ({
           </span>
         )}
       </div>
+
       <div className="flex flex-col">
         <Select
           placeholder="جنسیت"
+          className="h-12"
           options={[
             { label: 'مرد', value: 'male' },
             { label: 'زن', value: 'female' },
@@ -73,6 +78,7 @@ const FormItem: FC<FormItemProps> = ({
           </span>
         )}
       </div>
+
       <div className="flex flex-col">
         <Input
           value={watch(`fields.${index}.nationalCode`)}
@@ -80,6 +86,7 @@ const FormItem: FC<FormItemProps> = ({
             setValue(`fields.${index}.nationalCode`, e.target.value)
           }
           placeholder="کد ملی"
+          className="h-12"
           type="number"
         />
         {formState.errors.fields?.[index] && (

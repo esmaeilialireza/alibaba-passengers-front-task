@@ -1,4 +1,4 @@
-export type FormData = {
+export interface FormData {
   fields: {
     firstName: string;
     lastName: string;
@@ -6,4 +6,4 @@ export type FormData = {
     nationalCode: string;
     birth: Date | null;
   }[];
-};
+}

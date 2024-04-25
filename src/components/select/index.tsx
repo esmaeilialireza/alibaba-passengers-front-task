@@ -16,7 +16,7 @@ const Select: FC<SelectProps> = ({
   ...props
 }) => {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-full">
       <select
         className={clsx(
           'rounded-lg border w-full h-full text-gray-400 border-gray-200 px-3 py-2.5 font-normal transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 disabled:border-0 disabled:bg-blue-gray-50 outline-none appearance-none',
@@ -30,7 +30,7 @@ const Select: FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-2 text-gray-700">
+      <div className="pointer-events-none absolute top-5 end-0 flex items-center px-2 text-gray-700">
         <svg
           className="w-4 h-4 fill-gray-400"
           xmlns="http://www.w3.org/2000/svg"
