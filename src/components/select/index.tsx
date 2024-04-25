@@ -16,7 +16,7 @@ const Select: FC<SelectProps> = ({
   ...props
 }) => {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full">
       <select
         className={clsx(
           'rounded-lg border w-full h-full text-gray-400 border-gray-200 px-3 py-2.5 font-normal transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 disabled:border-0 disabled:bg-blue-gray-50 outline-none appearance-none',

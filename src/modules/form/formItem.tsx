@@ -1,11 +1,12 @@
-import { FC, HTMLProps } from 'react';
+import { ChangeEvent, FC, HTMLProps } from 'react';
 import clsx from 'clsx';
+import { FieldArrayWithId, useFormContext } from 'react-hook-form';
 
 import Input from '@/components/input';
 import Select from '@/components/select';
 import DatePicker from '@/components/date-picker';
-import { FieldArrayWithId, useFormContext } from 'react-hook-form';
-import { FormData } from './types';
+
+import { FormData } from '@/types';
 
 interface FormItemProps extends HTMLProps<HTMLDivElement> {
   index: number;
@@ -29,7 +30,7 @@ const FormItem: FC<FormItemProps> = ({
       <div className="flex flex-col">
         <Input
           value={watch(`fields.${index}.firstName`)}
-          onChange={(e) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setValue(`fields.${index}.firstName`, e.target.value)
           }
           placeholder="نام فارسی"
@@ -43,7 +44,9 @@ const FormItem: FC<FormItemProps> = ({
       <div className="flex flex-col">
         <Input
           value={watch(`fields.${index}.lastName`)}
-          onChange={(e) => setValue(`fields.${index}.lastName`, e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setValue(`fields.${index}.lastName`, e.target.value)
+          }
           placeholder="نام خانوادگی فارسی"
         />
         {formState.errors.fields?.[index] && (
@@ -60,7 +63,9 @@ const FormItem: FC<FormItemProps> = ({
             { label: 'زن', value: 'female' },
           ]}
           value={watch(`fields.${index}.gender`)}
-          onChange={(e) => setValue(`fields.${index}.gender`, e.target.value)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setValue(`fields.${index}.gender`, e.target.value)
+          }
         />
         {formState.errors.fields?.[index] && (
           <span className="text-red-400 mt-2">
@@ -71,7 +76,7 @@ const FormItem: FC<FormItemProps> = ({
       <div className="flex flex-col">
         <Input
           value={watch(`fields.${index}.nationalCode`)}
-          onChange={(e) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setValue(`fields.${index}.nationalCode`, e.target.value)
           }
           placeholder="کد ملی"
@@ -85,6 +90,7 @@ const FormItem: FC<FormItemProps> = ({
       </div>
 
       <div className="flex flex-col">
+        <p className="text-sm mb-1">تاریخ تولد</p>
         <DatePicker
           onChange={(date) => setValue(`fields.${index}.birth`, date)}
           value={watch(`fields.${index}.birth`)}

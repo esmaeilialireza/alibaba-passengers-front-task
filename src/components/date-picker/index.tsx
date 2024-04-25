@@ -1,4 +1,5 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent } from 'react';
+import moment from 'moment-jalaali';
 import Select from '../select';
 
 const days = Array.from({ length: 31 }, (_, index) => {
@@ -28,32 +29,49 @@ const years = Array.from({ length: 1403 - 1350 + 1 }, (_, index) => {
 });
 
 interface DatePickerProps {
-  value?: Date;
+  value: Date | null;
   onChange: (date: Date) => void;
 }
 
 const DatePicker: FC<DatePickerProps> = ({ onChange, value }) => {
-  const [selectedDay, setSelectedDay] = useState<string>(
-    value ? value.getDate().toString().padStart(2, '0') : ''
-  );
-  const [selectedMonth, setSelectedMonth] = useState<string>(
-    value ? (value.getMonth() + 1).toString().padStart(2, '0') : ''
-  );
-  const [selectedYear, setSelectedYear] = useState<string>(
-    value ? value.getFullYear().toString() : ''
-  );
+  const [selectedDay, setSelectedDay] = useState<string>('');
+  const [selectedMonth, setSelectedMonth] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<string>('');
 
   useEffect(() => {
-    if (selectedDay && selectedMonth && selectedYear) {
-      const newDate = new Date(
-        parseInt(selectedYear, 10),
-        parseInt(selectedMonth, 10) - 1,
-        parseInt(selectedDay, 10)
-      );
-      onChange(newDate);
+    if (value) {
+      const jalaliDate = moment(value).format('jYYYY/jM/jD').split('/');
+      console.log({ value, jalaliDate });
+      setSelectedYear(jalaliDate[0]);
+      setSelectedMonth(jalaliDate[1].padStart(2, '0'));
+      setSelectedDay(jalaliDate[2].padStart(2, '0'));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDay, selectedMonth, selectedYear]);
+  }, [value]);
+
+  const handleDayChange = (selectedValue: string) => {
+    setSelectedDay(selectedValue);
+    updateDate(selectedValue, selectedMonth, selectedYear);
+  };
+
+  const handleMonthChange = (selectedValue: string) => {
+    setSelectedMonth(selectedValue);
+    updateDate(selectedDay, selectedValue, selectedYear);
+  };
+
+  const handleYearChange = (selectedValue: string) => {
+    setSelectedYear(selectedValue);
+    updateDate(selectedDay, selectedMonth, selectedValue);
+  };
+
+  const updateDate = (day: string, month: string, year: string) => {
+    if (day && month && year) {
+      const gregorianDate = moment(
+        `${year}/${month}/${day}`,
+        'jYYYY/jM/jD'
+      ).toDate();
+      onChange(gregorianDate);
+    }
+  };
 
   return (
     <div className="flex">
@@ -61,15 +79,17 @@ const DatePicker: FC<DatePickerProps> = ({ onChange, value }) => {
         placeholder="روز"
         className="flex-1 rounded-s-lg rounded-e-none"
         value={selectedDay}
-        onChange={(selectedValue) => setSelectedDay(selectedValue.target.value)}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          handleDayChange(e.target.value)
+        }
         options={days}
       />
       <Select
         placeholder="ماه"
         className="flex-[2] rounded-s-none rounded-e-none border-e-0 border-s-0"
         value={selectedMonth}
-        onChange={(selectedValue) =>
-          setSelectedMonth(selectedValue.target.value)
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          handleMonthChange(e.target.value)
         }
         options={months}
       />
@@ -77,8 +97,8 @@ const DatePicker: FC<DatePickerProps> = ({ onChange, value }) => {
         placeholder="سال"
         className="flex-1 rounded-e-lg rounded-s-none"
         value={selectedYear}
-        onChange={(selectedValue) =>
-          setSelectedYear(selectedValue.target.value)
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          handleYearChange(e.target.value)
         }
         options={years}
       />

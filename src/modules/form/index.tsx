@@ -4,9 +4,10 @@ import React, { FC, HTMLProps } from 'react';
 import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { FormData } from '@/types';
+
 import FormItem from './formItem';
 import formSchema from './zod-schema';
-import { FormData } from './types';
 
 interface FormProps extends HTMLProps<HTMLFormElement> {}
 
@@ -20,7 +21,7 @@ const Form: FC<FormProps> = ({ className, ...props }) => {
           lastName: '',
           gender: '',
           nationalCode: '',
-          birth: '',
+          birth: null,
         },
       ],
     },
@@ -35,8 +36,6 @@ const Form: FC<FormProps> = ({ className, ...props }) => {
   const onSubmit = form.handleSubmit((data) => {
     console.log(data);
   });
-
-  console.log({ errors: form.formState.errors, data: form.getValues() });
 
   return (
     <FormProvider {...form}>
@@ -57,7 +56,7 @@ const Form: FC<FormProps> = ({ className, ...props }) => {
             type="button"
             onClick={() =>
               append({
-                birth: '',
+                birth: null,
                 firstName: '',
                 gender: '',
                 lastName: '',

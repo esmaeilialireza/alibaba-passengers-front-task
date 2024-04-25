@@ -4,6 +4,6 @@ export type FormData = {
     lastName: string;
     gender: string;
     nationalCode: string;
-    birth: Date;
+    birth: Date | null;
   }[];
 };
